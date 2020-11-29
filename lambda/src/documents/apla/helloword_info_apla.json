@@ -1,0 +1,76 @@
+{
+    "type": "APLA",
+    "version": "0.8",
+    "description": "This document plays a sound in background while Alexa says something.",
+    "mainTemplate": {
+      "parameters": ["payload"],
+      "item": {
+        "type": "Sequencer",
+        "description": "The Mixer component plays a set of audio clips at the same time. See docs for more information.",
+        "items": [
+          {
+            "type": "Speech",
+            "contentType": "SSML",
+            "description": "The Text to Speech.",
+            "content": "<speak><amazon:effect name='whispered'><say-as interpret-as='interjection'>shh escucha</say-as>${payload.data.textToSpeech.texto1}</amazon:effect><break time='1s'/><amazon:emotion name='excited' intensity='high'>${payload.data.textToSpeech.texto2}</amazon:emotion></speak>"
+          },
+          {
+            "type": "Mixer",
+            "description": "The Audio component plays the provided audio file, such as an MP3 file. See docs for more information.",
+            "items": [
+              {
+                "type": "Audio",
+                "description": "The Audio component plays the provided audio file, such as an MP3 file. See docs for more information.",
+                "source": "${payload.data.audio1}",
+                "filter": [
+                  {
+                    "type": "Volume",
+                    "amount": "20%"
+                  },
+                  {
+                    "type": "Trim",
+                    "end": 11000
+                  },
+                  {
+                    "type": "FadeOut",
+                    "duration": 1000
+                  }
+                ]
+              },
+              {
+              "type": "Sequencer",
+              "description": "The Mixer component plays a set of audio clips at the same time. See docs for more information.",
+              "items": [
+                  {
+                      "type": "Silence",
+                      "duration": 1500
+                  },
+                  {
+                    "type": "Audio",
+                    "source": "${payload.data.audio2}",
+                    "filter":[
+                           {
+                            "type": "Volume",
+                            "amount": "200%"
+                          },
+                          {
+                            "type": "Trim",
+                            "end": 2500
+                          }
+                      ]
+                  },
+                  {
+                    "type": "Speech",
+                    "contentType": "SSML",
+                    "description": "The Text to Speech.",
+                    "content": "<speak>${payload.data.textToSpeech.texto3}</speak>"
+                  }
+               ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
