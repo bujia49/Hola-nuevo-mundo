@@ -1,5 +1,5 @@
 'use strict';
-// Skill hola mundo estructurada por directorios
+// Skill hola nuevo mundo está estructurada por directorios y utiliza APLA
 
 const Alexa = require('ask-sdk-core');
 
